@@ -1,12 +1,14 @@
 <?php
 
 namespace Webazex\Nexus\Core;
-use Webazex\Nexus\Core\Logger;
 use Webazex\Nexus\Core\Enums\LogLevel;
+use Webazex\nexus\Core\Logger\Logger;
+
 class Core
 {
     public static function test(){
-        $Logger = new Logger();
-        $Logger->log(LogLevel::INFO,"Test message");
+        Logger::warning("Soo");
+        Logger::error("fuck");
+        Logger::info("It's working");
     }
 }

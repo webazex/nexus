@@ -1,8 +1,10 @@
 <?php
 
-namespace Webazex\Nexus\Core;
+namespace Webazex\Nexus\Core\Logger;
 use Webazex\Nexus\Core\Enums\LogLevel;
-class Logger
+
+require_once(NEXUS_CORE_DIR.'Enums'.NEXUS_DS.'LogLevel.php');
+class LogWriter
 {
     static private string $nexusLogDir = "";
 
@@ -12,7 +14,7 @@ class Logger
 
     }
 
-    public function log(LogLevel $level, string $message, int $code = 0): void {
+    public function write(LogLevel $level, string $message, int $code = 0): void {
         $formattedMessage = sprintf("[%s] %s\n", date('Y-m-d H:i:s'),
             'code: '.$code. ' Message: '.$message);
         if(!is_dir(self::$nexusLogDir)) {
