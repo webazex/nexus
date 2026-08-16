@@ -8,11 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     header( 'HTTP/1.1 403 Forbidden' );
     exit( 'Direct access denied.' );
 }
+
+use Webazex\Nexus\Core\Logger;
+use Webazex\Nexus\Core\Enums\LogLevel;
+
 if(file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'paths.php')) {
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'paths.php';
 }else{
-    Throw new Exception("Not found Core pathes", 500);
+    Throw new Exception("Not found Core paths", 500);
 }
+
 spl_autoload_register(function ($class) {
     try {
         $nexusNamespace = "Webazex\\Nexus\\";
@@ -28,7 +33,7 @@ spl_autoload_register(function ($class) {
             }
         }
     } catch (\Throwable $e) {
-        echo $e->getMessage()."\n \r";
-        echo $e->getCode()."\n \r";
+       $logger = new Logger();
+       $logger->log(LogLevel::ERROR, $e->getMessage(), $e->getCode());
     }
 });

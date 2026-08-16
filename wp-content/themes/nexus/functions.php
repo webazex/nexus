@@ -8,4 +8,5 @@ echo "<pre>";
 //echo NEXUS_DIR_URI."\n \r";
 //echo NEXUS_INCLUDES_DIR."\n \r";
 //echo NEXUS_CORE_DIR."\n \r";
+Core::test();
 echo "</pre>";
