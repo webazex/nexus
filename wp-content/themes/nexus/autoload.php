@@ -31,6 +31,9 @@ spl_autoload_register(function ($class) {
             if(!class_exists($class, false)) {
                 Throw new \LogicException("Nexus class $class not found", 2);
             }
+            if(!enum_exists($class, false)) {
+                Throw new \LogicException("Nexus enum $class not found", 3);
+            }
         }
     } catch (\Throwable $e) {
        $logger = new Logger();
