@@ -2,7 +2,7 @@
 
 namespace Webazex\Nexus\Core;
 use Webazex\Nexus\Core\Enums\LogLevel;
-use Webazex\nexus\Core\Logger\Logger;
+use Webazex\Nexus\Core\Logger\Logger;
 
 class Core
 {

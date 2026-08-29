@@ -14,9 +14,11 @@ class LogWriter
 
     }
 
-    public function write(LogLevel $level, string $message, int $code = 0): void {
+    public function write(LogLevel $level, string $message, int $code = 0, bool $stackTrace = true): void {
+        $realStackTrace = ($stackTrace && ($level == (LogLevel::ERROR || LogLevel::WARNING)))? debug_backtrace() : '';
+
         $formattedMessage = sprintf("[%s] %s\n", date('Y-m-d H:i:s'),
-            'code: '.$code. ' Message: '.$message);
+            'code: '.$code. ' Message: '.$message. 'Stack trace:' . $realStackTrace);
         if(!is_dir(self::$nexusLogDir)) {
             mkdir(self::$nexusLogDir, 0755, true);
         }

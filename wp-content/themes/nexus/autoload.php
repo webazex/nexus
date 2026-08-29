@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-use Webazex\nexus\Core\Logger\Logger;
+use Webazex\Nexus\Core\Logger\Logger;
 
 if ( ! defined( 'ABSPATH' ) ) {
     header( 'HTTP/1.1 403 Forbidden' );
@@ -28,12 +28,6 @@ spl_autoload_register(function ($class) {
                 Throw new \Exception("Nexus file $class not found", 1);
             }
             require_once NEXUS_DIR.$fixedStr;
-            if(!class_exists($class, false)) {
-                Throw new \LogicException("Nexus class $class not found", 2);
-            }
-            if(!enum_exists($class, false)) {
-                Throw new \LogicException("Nexus enum $class not found", 3);
-            }
         }
     } catch (\Throwable $e) {
         Logger::error($e->getMessage(), $e->getCode());
