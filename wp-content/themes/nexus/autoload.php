@@ -18,6 +18,7 @@ if(file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'i
     Throw new Exception("Not found Core paths", 500);
 }
 require_once NEXUS_CORE_DIR.'Logger'.NEXUS_DS.'Logger.php';
+
 spl_autoload_register(function ($class) {
     try {
         $nexusNamespace = "Webazex\\Nexus\\";
