@@ -31,7 +31,11 @@ class LogWriter
                 Throw new \Exception("Nexus log directory does not exist", 5);
             }
         }else{
-            file_put_contents(self::$nexusLogDir.date("Y-m-d").'-'.$level->getLevelName(), $formattedMessage, FILE_APPEND);
+            $logRecord = file_put_contents(self::$nexusLogDir.date("Y-m-d").'-'.$level->getLevelName(), $formattedMessage, FILE_APPEND);
+            if($logRecord === false) {
+                error_log('Log record not created error: '.$formattedMessage);
+                Throw new \Exception("Log record not created error", 5);
+            }
         }
 
     }
