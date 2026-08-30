@@ -26,20 +26,24 @@ if(file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'i
 require_once NEXUS_CORE_DIR.'Logger'.NEXUS_DS.'Logger.php';
 
 spl_autoload_register(function ($class) {
-    try {
-        $nexusNamespace = "Webazex\\Nexus\\";
-        if (str_starts_with($class, $nexusNamespace)) {
-            $cleanedStr = str_replace($nexusNamespace, '', $class);
-            $fixedStr = str_replace("\\", NEXUS_DS, $cleanedStr.'.php');
+    $nexusNamespace = "Webazex\\Nexus\\";
+    if (str_starts_with($class, $nexusNamespace)) {
+        $cleanedStr = str_replace($nexusNamespace, '', $class);
+        $fixedStr = str_replace("\\", NEXUS_DS, $cleanedStr.'.php');
+        try {
             if (!file_exists(NEXUS_DIR.$fixedStr)) {
                 Throw new \Exception("Nexus file $class not found", 3);
             }
-            require_once NEXUS_DIR.$fixedStr;
+        }catch (\Exception $e) {
+            Logger::error($e->getMessage(), $e->getCode());
+        }
+        require_once NEXUS_DIR.$fixedStr;
+        try {
             if(!isNexusEntity($class)) {
                 Throw new \Exception("File included, but Nexus entity $class not found", 4);
             }
+        } catch (\Exception $e) {
+            Logger::error($e->getMessage(), $e->getCode());
         }
-    } catch (\Throwable $e) {
-        Logger::error($e->getMessage(), $e->getCode());
     }
 });
