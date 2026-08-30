@@ -18,8 +18,10 @@ class LogWriter
         ob_start();
         debug_print_backtrace();
         $tracing = ob_get_clean();
-        $realStackTrace = ($stackTrace && ($level == (LogLevel::ERROR || LogLevel::WARNING)))? $tracing : '';
-
+        $realStackTrace = '';
+        if(LogLevel::WARNING == $level || LogLevel::ERROR == $level) {
+            $realStackTrace = $tracing;
+        }
         $formattedMessage = sprintf("[%s] %s\n", date('Y-m-d H:i:s'),
             'code: '.$code. ' Message: '.$message. 'Stack trace:' . $realStackTrace);
         if(!is_dir(self::$nexusLogDir)) {
