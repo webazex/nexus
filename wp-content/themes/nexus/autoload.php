@@ -36,7 +36,7 @@ spl_autoload_register(function ($class) {
             }
         }catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getCode());
-            wp_die($e->getMessage(), $e->getCode());
+            wp_die($e->getCode().$e->getMessage(), 'Nexus error');
         }
         require_once NEXUS_DIR.$fixedStr;
         try {
@@ -45,7 +45,7 @@ spl_autoload_register(function ($class) {
             }
         } catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getCode());
-            wp_die($e->getMessage(), $e->getCode());
+            wp_die($e->getCode().$e->getMessage(), 'Nexus error');
         }
     }
 });
