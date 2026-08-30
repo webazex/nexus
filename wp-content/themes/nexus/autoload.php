@@ -35,7 +35,7 @@ spl_autoload_register(function ($class) {
                 Throw new \Exception("Nexus file $class not found", 3);
             }
             require_once NEXUS_DIR.$fixedStr;
-            if(!isEntity($class)) {
+            if(!isNexusEntity($class)) {
                 Throw new \Exception("File included, but Nexus entity $class not found", 4);
             }
         }
