@@ -15,13 +15,22 @@ class LogWriter
     }
 
     public function write(LogLevel $level, string $message, int $code = 0, bool $stackTrace = true): void {
-        $realStackTrace = ($stackTrace && ($level == (LogLevel::ERROR || LogLevel::WARNING)))? debug_backtrace() : '';
+        ob_start();
+        debug_print_backtrace();
+        $tracing = ob_get_clean();
+        $realStackTrace = ($stackTrace && ($level == (LogLevel::ERROR || LogLevel::WARNING)))? $tracing : '';
 
         $formattedMessage = sprintf("[%s] %s\n", date('Y-m-d H:i:s'),
             'code: '.$code. ' Message: '.$message. 'Stack trace:' . $realStackTrace);
         if(!is_dir(self::$nexusLogDir)) {
             mkdir(self::$nexusLogDir, 0755, true);
+            if(!is_dir(self::$nexusLogDir)) {
+                error_log($formattedMessage);
+                Throw new \Exception("Nexus log directory does not exist", 5);
+            }
+        }else{
+            file_put_contents(self::$nexusLogDir.date("Y-m-d").'-'.$level->getLevelName(), $formattedMessage, FILE_APPEND);
         }
-        file_put_contents(self::$nexusLogDir.date("Y-m-d").'-'.$level->getLevelName(), $formattedMessage, FILE_APPEND);
+
     }
 }

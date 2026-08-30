@@ -10,28 +10,28 @@ class Logger
 {
     static private ?LogWriter $writer = null;
 
-    static private function setWriter(LogWriter $writer)
+    static private function setWriter()
     {
         return self::$writer ??= new LogWriter();
     }
 
     static public function info(string $message, int $code = 0):void {
         if(is_null(self::$writer)) {
-            self::$writer = self::setWriter(new LogWriter());
+            self::$writer = self::setWriter();
         }
         self::$writer->write(LogLevel::INFO, $message, $code);
     }
 
     static public function warning(string $message, int $code = 0):void {
         if(is_null(self::$writer)) {
-            self::$writer = self::setWriter(new LogWriter());
+            self::$writer = self::setWriter();
         }
         self::$writer->write(LogLevel::WARNING, $message, $code);
     }
 
     static public function error(string $message, int $code = 0):void {
         if(is_null(self::$writer)) {
-            self::$writer = self::setWriter(new LogWriter());
+            self::$writer = self::setWriter();
         }
         self::$writer->write(LogLevel::ERROR, $message, $code);
     }
